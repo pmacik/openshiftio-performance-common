@@ -1,2 +1,2 @@
 # openshiftio-performance-common
-Common scripts used for performance testing of Openshift.io
+Common utility scripts used for performance testing of Openshift.io
