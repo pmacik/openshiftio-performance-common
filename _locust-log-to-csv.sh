@@ -15,7 +15,7 @@ cat $INPUT | while read line; do
 	if [[ $line == "Percentage of the requests completed within given times"* ]]; then
 		break;
 	else
-		grep -F "$METRIC" | sed -e 's,|,,g' | sed -e 's,\s\+,;,g' | sed -e 's,([0-9]\+\.[0-9]\+%),,g' | cut -d ";" -f 4-9 >> $$-$OUTPUT;
+		grep -F "$METRIC" | sed -e 's,|,,g' | sed -e 's,\s\+,;,g' | sed -e 's,([0-9]\+\.[0-9]\+%),,g' | cut -d ";" -f 4-10 >> $$-$OUTPUT;
 	fi
 done
 
