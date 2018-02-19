@@ -10,29 +10,22 @@ echo $OUTPUT
 echo -n "" > $OUTPUT
 
 header="TimeInSeconds;"`cat $INPUT | grep "Name" | head -n 1 | sed -e 's,\s\s*|\?\s\+,;,g' | cut -d ";" -f 2-8`;
-touch $$
-cat $INPUT | while read line;
-do
-	if [[ $line == "Percentage of the requests completed within given times"* ]];
-	then
-		#echo "Reached end of report...";
+
+cat $INPUT | while read line; do
+	if [[ $line == "Percentage of the requests completed within given times"* ]]; then
 		break;
 	else
-		echo $line | cat - $$ > $$.new && mv -f $$.new $$
-	fi;
+		grep -F "$METRIC" | sed -e 's,|,,g' | sed -e 's,\s\+,;,g' | sed -e 's,([0-9]\+\.[0-9]\+%),,g' | cut -d ";" -f 4-9 >> $$-$OUTPUT;
+	fi
 done
 
-cat $$ | grep -F "$METRIC" | sed -e 's,|,,g' | sed -e 's,\s\+,;,g' | sed -e 's,([0-9]\+\.[0-9]\+%),,g' | cut -d ";" -f 3-9 >> $$.$OUTPUT;
-
 pseudo_now=$DURATION
-cat $$.$OUTPUT | while read line;
-do
-	echo "$pseudo_now;$line" | cat - $OUTPUT > $OUTPUT.new && mv -f $OUTPUT.new $OUTPUT
+tac $$-$OUTPUT | while read line; do
+	echo "$pseudo_now;$line" >> $$-$OUTPUT.new
 	pseudo_now=`expr $pseudo_now - 2`
 done
 
-mv $OUTPUT $$.$OUTPUT
 echo $header>$OUTPUT
-cat $$.$OUTPUT >> $OUTPUT
+tac $$-$OUTPUT.new >> $OUTPUT
 
-rm -rf $$*
+rm -rf $$-*
