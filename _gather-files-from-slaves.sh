@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+
 #source _setenv.sh
 
 PATTERN=${1:-$JOB_BASE_NAME-$BUILD_NUMBER-*}
