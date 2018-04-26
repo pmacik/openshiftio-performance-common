@@ -2,7 +2,7 @@
 
 #source _setenv.sh
 
-NAME=`echo $1 | sed -e 's,\.csv,,g'`
+NAME=`echo $1 | sed -e 's/csv/png/' | sed -e 's,\.csv,,g'`
 
 gnuplot << eor
 set terminal png size $REPORT_CHART_WIDTH, $REPORT_CHART_HEIGHT noenhanced
