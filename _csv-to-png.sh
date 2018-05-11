@@ -2,17 +2,18 @@
 
 #source _setenv.sh
 
+mkdir -p $LOG_DIR/png
+
 INPUT=$1
 TITLE=$2
 X_LABEL=$3
 Y_LABEL=$4
-NAME=`echo $1 | sed -e 's/csv/png/' | sed -e 's,\.csv,,g'`
-OUTPUT=${5:-$NAME.png}
+NAME=`echo $INPUT | xargs -I{} basename {} | sed -e 's,\.csv,,g'`
 
 gnuplot << eor
 set terminal png size $REPORT_CHART_WIDTH, $REPORT_CHART_HEIGHT noenhanced
 set title "$TITLE"
-set output "$OUTPUT"
+set output "$LOG_DIR/png/$NAME.png"
 set style data line
 set yrange [0:*]
 set xdata time
