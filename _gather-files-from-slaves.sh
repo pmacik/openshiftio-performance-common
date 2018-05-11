@@ -5,8 +5,8 @@
 PATTERN=${1:-$JOB_BASE_NAME-$BUILD_NUMBER-*}
 
 for i in $(seq 1 $SLAVES); do
-	mkdir -p slave-$i
-	scp $SSH_USER@$SLAVE_PREFIX$i:$SSH_WORKDIR/$PATTERN slave-$i/;
+	mkdir -p $LOG_DIR/slave-$i
+	scp -r $SSH_USER@$SLAVE_PREFIX$i:$SSH_WORKDIR/$PATTERN $LOG_DIR/slave-$i/;
 done
 
 

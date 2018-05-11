@@ -4,7 +4,8 @@
 
 METRIC=$1;
 INPUT=$2;
-OUTPUT=${3-$JOB_BASE_NAME-$BUILD_NUMBER-`echo $METRIC | sed -e 's,[ /?:]\+,_,g'`.csv};
+TMPFILE=${3-$JOB_BASE_NAME-$BUILD_NUMBER-`echo $METRIC | sed -e 's,[ /?:]\+,_,g'`.csv};
+OUTPUT=${3-$LOG_DIR/csv/$JOB_BASE_NAME-$BUILD_NUMBER-`echo $METRIC | sed -e 's,[ /?:]\+,_,g'`.csv};
 
 echo $OUTPUT
 echo -n "" > $OUTPUT
@@ -15,17 +16,17 @@ cat $INPUT | while read line; do
 	if [[ $line == "Percentage of the requests completed within given times"* ]]; then
 		break;
 	else
-		echo $line | grep -F "$METRIC" | sed -e "s,[\( \)\(|\)\]\+,;,g" | cut -d ";" -f 3-4,6-11 >> $$-$OUTPUT
+		echo $line | grep -F "$METRIC" | sed -e "s,[\( \)\(|\)\]\+,;,g" | cut -d ";" -f 3-4,6-11 >> $$-$TMPFILE
 	fi
 done
 
 pseudo_now=$DURATION
-tac $$-$OUTPUT | while read line; do
-	echo "$pseudo_now;$line" >> $$-$OUTPUT.new
+tac $$-$TMPFILE | while read line; do
+	echo "$pseudo_now;$line" >> $$-$TMPFILE.new
 	pseudo_now=`expr $pseudo_now - 2`
 done
 
 echo $header>$OUTPUT
-tac $$-$OUTPUT.new >> $OUTPUT
+tac $$-$TMPFILE.new >> $OUTPUT
 
 rm -rf $$-*

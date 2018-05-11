@@ -6,7 +6,7 @@ INPUT=$1
 TITLE=$2
 X_LABEL=$3
 Y_LABEL=$4
-NAME=`echo $1 | sed -e 's,\.csv,,g'`
+NAME=`echo $1 | sed -e 's/csv/png/' | sed -e 's,\.csv,,g'`
 OUTPUT=${5:-$NAME.png}
 
 gnuplot << eor
