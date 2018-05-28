@@ -1,0 +1,5 @@
+osioperf.*
+users.properties-slave*
+users.tokens-slave*
+*.out
+*logs

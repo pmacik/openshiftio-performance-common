@@ -1,0 +1,5 @@
+#@@METRIC_REQUEST_TYPE@@;@@METRIC_NAME@@
+GET;get-user1
+GET;get-user2
+example;metric-1
+example;metric-2
