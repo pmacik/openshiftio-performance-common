@@ -4,6 +4,6 @@
 
 KILLSIGNAL=${1:-9}
 
-echo "Killing a Locust master ..."
+echo "Killing a Locust ..."
 bash -c 'kill -'$KILLSIGNAL' `ps aux | grep locust | grep -v grep | grep python | sed -e "s,[^0-9]* \([0-9]\+\) .*,\1,g"`' | echo "Done";
 
