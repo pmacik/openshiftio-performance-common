@@ -4,6 +4,7 @@
 
 LOCUST_FILE=${1:-osioperf.py}
 
+LOG_DIR=${LOG_DIR:-$JOB_BASE_NAME-$BUILD_NUMBER-logs}
 mkdir -p $LOG_DIR/csv
 
 if [ -f $LOCUST_FILE ]; then
