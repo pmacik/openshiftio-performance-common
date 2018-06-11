@@ -4,6 +4,8 @@
 
 LOCUST_FILE=${1:-osioperf.py}
 
+LOG_DIR=${LOG_DIR:-$JOB_BASE_NAME-$BUILD_NUMBER-logs}
+
 if [ -f $LOCUST_FILE ] ; then
 	for i in $(seq 1 $SLAVES); do
 		SLAVE_HOST="$SLAVE_PREFIX$i";

@@ -4,6 +4,8 @@
 
 LOCUST_FILE=${1:-osioperf.py}
 
+LOG_DIR=${LOG_DIR:-$JOB_BASE_NAME-$BUILD_NUMBER-logs}
+
 if [ -f $LOCUST_FILE ]; then
 	scp $LOCUST_FILE $SSH_USER@$MASTER_HOST:$SSH_WORKDIR/$JOB_BASE_NAME-$BUILD_NUMBER-locustfile.py;
 	ssh $SSH_USER@$MASTER_HOST "chmod u+w $SSH_WORKDIR/users.env"
