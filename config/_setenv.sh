@@ -62,6 +62,10 @@ export ENV_FILE=${ENV_FILE:-/tmp/osioperftest.users.env}
 # A hostname in Zabbix the report is for
 #export ZABBIX_HOST=qa_openshift.io
 
+# A prefix for the zabbix metric names.
+# (default value is equal to $JOB_BASE_NAME)
+export ZABBIX_TESTSUITE_PREFIX=${ZABBIX_TESTSUITE_PREFIX:-$JOB_BASE_NAME}
+
 # A number of seconds for how long the test should run
 #export DURATION=60
 
